@@ -21,14 +21,14 @@ fun Navigation() {
             HomeScreen(navController = navController)
         }
 
-        composable(Screens.DetailsScreen.name + "/{choice}",
-        arguments = listOf(navArgument(name = "choice") {
+        composable(Screens.DetailsScreen.name + "/{category}",
+        arguments = listOf(navArgument(name = "category") {
 
             type = NavType.StringType
 
         })) { backStackEntry ->
             DetailsScreen(navController = navController,
-            backStackEntry.arguments?.getString("choice"))
+            backStackEntry.arguments?.getString("category"))
         }
     }
 }

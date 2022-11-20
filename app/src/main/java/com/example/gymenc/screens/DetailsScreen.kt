@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -14,15 +16,23 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.gymenc.model.Exercise
 import com.example.gymenc.model.getExercises
+import com.example.gymenc.widgets.ExerciseRow
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun DetailsScreen(navController: NavController, choiceId: String?) {
+fun DetailsScreen(navController: NavController, categoryId: String?) {
 
-    val newExerciseList = getExercises().filter { exercise ->
-        exercise.id == choiceId
+    var newExerciseList: List<Exercise> = when (categoryId) {
+        "chest" -> getExercises().filter { it.id.contains("c") }
+        "back" -> getExercises().filter { it.id.contains("b") }
+        "delts" -> getExercises().filter { it.id.contains("d") }
+        "biceps" -> getExercises().filter { it.id.contains("bi") }
+        "triceps" -> getExercises().filter { it.id.contains("t") }
+        else -> getExercises().filter { it.id.contains("l") }
     }
+
 
     Scaffold(topBar = {
         TopAppBar(
@@ -54,7 +64,13 @@ fun DetailsScreen(navController: NavController, choiceId: String?) {
                 ),
             contentAlignment = Alignment.TopCenter
         ) {
+            LazyColumn() {
+                items(items = newExerciseList) {
+                    ExerciseRow(exercise = it) {
 
+                    }
+                }
+            }
         }
     }
 }
