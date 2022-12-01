@@ -74,7 +74,7 @@ exerciseCategoriesList: List<Exercise> = getCategories()
                     columns = GridCells.Fixed(3)) {
 
                     items(items = exerciseCategoriesList) {
-                        CategoryRow(exercise = it) { category ->
+                        CategoryRow(category = it) { category ->
                             navController.navigate(route = Screens.DetailsScreen.name + "/$category")
                         }
                     }
